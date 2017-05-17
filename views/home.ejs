@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <title>Viewreful Website</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+<script>
+        var obj = <%- JSON.stringify(FilterArray) %> 
+	var sortObj = [];
+	for(var key in obj){
+		sortObj.push([key,obj[key]]);
+	}
+	sortObj.sort(function(a,b){
+		return b[1] - a[1];
+	});
+</script>
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand">Viewreful</a>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  <h3><span class="glyphicon glyphicon-folder-open"></span>  Python-Test</h3>
+  <ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" href="#home">Issues</a></li>
+    <li><a data-toggle="tab" href="#code">Code</a></li>
+    <li><a data-toggle="tab" href="#pep8">PEP8</a></li>
+    <p class="text-right"><script language="JavaScript"> 
+		var today = new Date( ) 
+		document.write(today.getFullYear( ) , "." , 
+		today.getMonth( )+1 , "." , today.getDate( ) , ".") 
+		</script>  | <span class="glyphicon glyphicon-calendar"></span></p>
+  </ul>
+
+  <div class="container">
+    <div class="tab-content">
+      <div id="home" class="tab-pane fade in active">
+        <div class="row">
+          <div class="col-sm-8">
+            <h4>Filtering & Sorting</h4>
+            <div class="well" style="height:200px;overflow:auto">
+	     <table class="table">
+              <thead>
+		<tr>
+		 <th>#</th>
+                 <th>Issue</th>
+                 <th>Count</th>
+		 <th>Description</th>
+		</tr>
+	      </thead>
+	      <tbody>
+		<% for(var i=1;i<=FilterArrayLength-1;i++) {%>
+	        <tr>
+	         <td id="#"><%=i%></td>
+	         <td id="issue"><script>document.write(sortObj[<%=i %>-1][0])</script></td>
+	         <td id="count"><script>document.write(sortObj[<%=i %>-1][1])</script></td>
+		 <td id="description">test</td>
+	        </tr>
+		<% } %>
+	      </tbody>
+             </table>
+            </div>
+            <h4>CopyCheck</h4>
+            <div class="well">
+              <p>CopyCheck</p>
+            </div>
+            <h4>Recommend Code</h4>
+            <div class="well">
+              <p>Recommend Code</p>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <h5>Issues</h5>
+            <div class="well">
+              <p style="text-decoration:underline;color:#C6C6C6">Indentation : <%= IndenCount %></p>
+              <p style="text-decoration:underline;color:#C6C6C6">Naming : <%= NamingCount %></p>
+              <p style="text-decoration:underline;color:#C6C6C6">Comment : <%= CommentCount %></p>
+              <p style="text-decoration:underline;color:#C6C6C6">WhiteSpace : <%= WhiteSpaceCount %></p>
+              <p style="text-decoration:underline;color:#C6C6C6">CodeFormat : <%= CodeFormatCount %></p>
+              <p style="text-decoration:underline;color:#C6C6C6">Statement : <%= StatementCount %></p>
+              <p style="text-decoration:underline;color:#C6C6C6">Function : <%= FunctionCount %></p>
+              <p style="text-decoration:underline;color:#C6C6C6">Class : <%= ClassCount %></p>
+              <p style="text-decoration:underline;color:#C6C6C6">Module : <%= ModuleCount %></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="code" class="tab-pane fade">
+        <h2>Students List</h2>
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Class Number</th>
+                <th>Name</th>
+                <th>Issues</th>
+                <th>Git Repository</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>20123341</td>
+                <td>源?곹썕</td>
+                <td><a href="./studentCode.html" target="_blank">35</a></td>
+                <td><a href="https://github.com/JessKimSH/visualComputing/blob/master/ass_1_1.py" target="_blank">https://github.com/JessKimSH/visualComputing/blob/master/ass_1_1.py</a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+
+      <div id="pep8" class="tab-pane fade">
+        <h3>Menu 2</h3>
+        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
+
