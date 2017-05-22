@@ -6,24 +6,46 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+  <script type="text/javascript" src="./stylesheets/js/shCore.js"></script>
+  <script type="text/javascript" src="./stylesheets/js/shLegacy.js"></script>
+  <script type="text/javascript" src="./stylesheets/js/shBrushBash.js"></script>
+  <script type="text/javascript" src="./stylesheets/js/shBrushCSharp.js"></script>
+  <script type="text/javascript" src="./stylesheets/js/shBrushCss.js"></script>
+  <script type="text/javascript" src="./stylesheets/js/shBrushGroovy.js"></script>
+  <script type="text/javascript" src="./stylesheets/js/shBrushPython.js"></script>
+  <script type="text/javascript" src="./stylesheets/js/shBrushPlain.js"></script>
+
+  <link rel=stylesheet type=text/css href="./stylesheets/css/style.css">
+  <link rel=stylesheet type=text/css href="./stylesheets/css/shCore.css">
+  <link rel=stylesheet type=text/css href="./stylesheets/css/shThemeRDark.css">
+
+  <script type="text/javascript">
+	  SyntaxHighlighter.defaults['toolbar'] = false;
+	  SyntaxHighlighter.all();
+  </script>
+
+  <script type="text/javascript">
+        var obj = <%- JSON.stringify(FilterArray) %> 
+        var sortObj = [];
+        for(var key in obj){
+                sortObj.push([key,obj[key]]);
+        }
+        sortObj.sort(function(a,b){
+                return b[1].count - a[1].count;
+        });
+	function show_hide_row(row)
+	{
+	 $("#"+row).toggle();
+	}
+  </script>
 </head>
 <body>
-<script>
-        var obj = <%- JSON.stringify(FilterArray) %> 
-	var sortObj = [];
-	for(var key in obj){
-		sortObj.push([key,obj[key]]);
-	}
-	sortObj.sort(function(a,b){
-		return b[1] - a[1];
-	});
-</script>
-
 <nav class="navbar navbar-inverse">
-  <div class="container-fluid">
+  <div class="container-fluid" >
     <div class="navbar-header">
       <a class="navbar-brand">Viewreful</a>
     </div>
@@ -35,7 +57,8 @@
   <ul class="nav nav-tabs">
     <li class="active"><a data-toggle="tab" href="#home">Issues</a></li>
     <li><a data-toggle="tab" href="#code">Code</a></li>
-    <li><a data-toggle="tab" href="#pep8">PEP8</a></li>
+    <li><a data-toggle="tab" href="#pep8">Analysis Descriptions</a></li>
+    <li><a data-toggle="tab" href="#graph">Grpah</a></li>
     <p class="text-right"><script language="JavaScript"> 
 		var today = new Date( ) 
 		document.write(today.getFullYear( ) , "." , 
@@ -49,7 +72,7 @@
         <div class="row">
           <div class="col-sm-8">
             <h4>Filtering & Sorting</h4>
-            <div class="well" style="height:200px;overflow:auto">
+            <div class="well" style="height:300px;overflow:auto">
 	     <table class="table">
               <thead>
 		<tr>
@@ -60,28 +83,34 @@
 		</tr>
 	      </thead>
 	      <tbody>
-		<% for(var i=1;i<=FilterArrayLength-1;i++) {%>
-	        <tr>
-	         <td id="#"><%=i%></td>
-	         <td id="issue"><script>document.write(sortObj[<%=i %>-1][0])</script></td>
-	         <td id="count"><script>document.write(sortObj[<%=i %>-1][1])</script></td>
-		 <td id="description">test</td>
-	        </tr>
+                <% for(var i=1;i<=FilterArrayLength-1;i++) {%>
+                <tr>
+                 <td id="#"><%=i%></td>
+                 <td id="issue"><script>document.write(sortObj[<%=i %>-1][1].id)</script></td>
+                 <td id="count"><script>document.write(sortObj[<%=i %>-1][1].count)</script></td>
+                 <td id="description"><script>document.write(sortObj[<%=i %>-1][1].korean)</script></td>
+                </tr>
 		<% } %>
 	      </tbody>
              </table>
             </div>
-            <h4>CopyCheck</h4>
+	    <form id="copyCheck" method="post" action="/CopyCheck">
+            <h4>CopyCheck    <input type="image" name="color" src="./images/animat-search-color.gif" height="30" width="30"></h4>
+	    </form>
             <div class="well">
-              <p>CopyCheck</p>
+              <p><a href="http://moss.stanford.edu/results/356074308" target="_blank">http://moss.stanford.edu/results/356074308</a></p>
             </div>
             <h4>Recommend Code</h4>
             <div class="well">
-              <p>Recommend Code</p>
+		<p><a href="https://github.com/polikuku/20150678/blob/master/20150678.py" target="_blank">https://github.com/polikuku/20150678/blob/master/20150678.py</a></p>
+                <p><a href="https://github.com/polikuku/20129027/blob/master/20129027.py" target="_blank">https://github.com/polikuku/20129027/blob/master/20129027.py</a></p>
+                <p><a href="https://github.com/polikuku/20149197/blob/master/20149197.py" target="_blank">https://github.com/polikuku/20149197/blob/master/20149197.py</a></p>
+                <p><a href="https://github.com/polikuku/20149253/blob/master/20149253.py" target="_blank">https://github.com/polikuku/20149253/blob/master/20149253.py</a></p>
+                <p><a href="https://github.com/polikuku/20149812/blob/master/20149812.py" target="_blank">https://github.com/polikuku/20149812/blob/master/20149812.py</a></p>
             </div>
           </div>
           <div class="col-sm-4">
-            <h5>Issues</h5>
+            <h4>Issues</h4>
             <div class="well">
               <p style="text-decoration:underline;color:#C6C6C6">Indentation : <%= IndenCount %></p>
               <p style="text-decoration:underline;color:#C6C6C6">Naming : <%= NamingCount %></p>
@@ -104,20 +133,65 @@
             <thead>
               <tr>
                 <th>#</th>
-                <th>Class Number</th>
+                <th>Student Number</th>
                 <th>Name</th>
                 <th>Issues</th>
                 <th>Git Repository</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>1</td>
-                <td>20123341</td>
-                <td>源?곹썕</td>
-                <td><a href="./studentCode.html" target="_blank">35</a></td>
-                <td><a href="https://github.com/JessKimSH/visualComputing/blob/master/ass_1_1.py" target="_blank">https://github.com/JessKimSH/visualComputing/blob/master/ass_1_1.py</a></td>
+	      <% for(var i=1;i<=StudentListLength;i++) {%>
+              <tr onclick="show_hide_row('hidden_row<%= i %>');">
+                <td><%= i %></td>
+                <td><%= StudentList[i-1].id %></td>
+                <td>홍길동 <%= i %></td>
+                <td><a href="./studentCode.html" target="_blank"><%= StudentList[i-1].cnt %></a></td>
+                <td><a href="<%= StudentList[i-1].url %>" target="_blank"><%= StudentList[i-1].url %></a></td>
+	      </tr>
+	      <tr id="hidden_row<%= i %>" class="hidden_row" style="display: none;">
+		<td colspan=5>
+  		 <div class"well">
+ 		  <div class="container show-grid">
+		     <div class="row">
+		       <pre class="col-md-4" style="height:200px;line-height:0.3em">
+			<h3>Static Information</h3>
+			<p>Block 깊이 		: <%= StudentList[i-1].blockDepth %></p>
+                        <p>최대 Block 깊이 		: <%= StudentList[i-1].maxBlockDepth %></p>
+                        <p>Block 개수 		: <%= StudentList[i-1].numBlocks %></p>
+                        <p>글자수 			: <%= StudentList[i-1].numCharacters %></p>
+                        <p>Class 개수 		: <%= StudentList[i-1].numClasses %></p>
+                        <p>주석 개수 		: <%= StudentList[i-1].numComments %></p>
+                        <p>Inline 주석 개수 	: <%= StudentList[i-1].numCommentsInline %></p>
+                        <p>함수 개수 		: <%= StudentList[i-1].numFunctions %></p>
+                        <p>Keyword 개수 		: <%= StudentList[i-1].numKeywords %></p>
+                        <p>Line 개수 		: <%= StudentList[i-1].numLines %></p>
+                        <p>Module Docstring 개수 	: <%= StudentList[i-1].numModuleDocStrings %></p>
+                        <p>SrcLines 수 		: <%= StudentList[i-1].numSrcLines %></p>
+                        <p>Token 개수 		: <%= StudentList[i-1].numTokens %></p>
+		       </pre>
+                       <pre class="col-md-4" style="height:200px">
+			<h3>Issues Count </h3>
+			<p>Indentation		: <%= StudentList[i-1].IndentationCount %></p>
+			<p>Naming		: <%= StudentList[i-1].NamingCount %> </p>
+                        <p>Comment		: <%= StudentList[i-1].CommentCount %></p>
+                        <p>WhiteSpace		: <%= StudentList[i-1].WhiteSpaceCount %></p>
+                        <p>CodeFormat		: <%= StudentList[i-1].CodeFormatCount %></p>
+                        <p>Statement		: <%= StudentList[i-1].StatementCount %></p>
+                        <p>Function		: <%= StudentList[i-1].FunctionCount %></p>
+                        <p>Class		: <%= StudentList[i-1].ClassCount %></p>
+                        <p>Module		: <%= StudentList[i-1].ModuleCount %></p>
+		       </pre>
+                       <pre class="col-md-4" style="height:200px">
+		       </pre>
+		     </div>
+		  </div>
+		 </div>
+                 <div class ="well">
+		  <pre class="brush: python"><%= StudentList[i-1].code %></pre>
+		 </div>
+		</td>
               </tr>
+	      <% } %>
             </tbody>
           </table>
         </div>
@@ -132,7 +206,9 @@
     </div>
   </div>
 </div>
-
 </body>
+<script>
+ console.log(<%- JSON.stringify(StudentList) %>)
+</script>
 </html>
 
