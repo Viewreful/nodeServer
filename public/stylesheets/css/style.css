@@ -1,11 +1,17 @@
+@font-face{font-family:'NEXON'; src:url('../../font/NEXON Football Gothic B.otf')}
+@font-face{font-family:'NEXON'; src:url('../../font/NEXON Football Gothic L.otf')}
+
+
+
 html { 
   overflow-y:scroll;
 }
 
 
-body {
-  width : 100%;	
+body,table,div,p {
+  font-family:'NEXON';
 }
+
 
 a {
   color: #00B7FF;
