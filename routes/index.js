@@ -7,7 +7,7 @@ var exec = require('child_process').exec;
 var _ = require('underscore');
 
 var mossUrl = ''
-
+var flag = 0;
 Object.size = function(obj){
 	var size = 0, key;
 	for (key in obj){
@@ -19,9 +19,18 @@ Object.size = function(obj){
 
 /* GET moss url by User Post Request*/
 router.post('/CopyCheck',function(req,res){
-        exec('cd /home/kdwhan27/nodeSever/viewreful/public/codePool/ && ./moss.sh', function(err, out, code) {
+        exec('cd /home/kdwhan27/nodeSever/viewreful/public/codePool2/ && ./moss.sh', function(err, out, code) {
+		flag = 0;
                 mossUrl = out;
 		res.redirect('/');
+        });
+})
+router.post('/CopyCheck2',function(req,res){
+        exec('cd /home/kdwhan27/nodeSever/viewreful/public/codePool/ && ./moss.sh', function(err, out, code) {
+		flag = 1;
+                mossUrl = out;
+		console.log(mossUrl)
+                res.redirect('/comp');
         });
 })
 
@@ -31,8 +40,8 @@ router.get('/', function(req, res, next) {
   dbUrl = 'mongodb://localhost:27017/test'
 
   MongoClient.connect(dbUrl, function(err, db){
-    var docsCollection = db.collection('docs');
-    var urlsCollection = db.collection('urls');   
+    var docsCollection = db.collection('docs2');
+    var urlsCollection = db.collection('urls2');   
     var issueCollection = db.collection('issueDescription');
 
     var numStudent = 0;
@@ -247,7 +256,7 @@ async.series([
 		return a.row <b.row?-1:a.row>b.row?1:0;
 	});
 	tempCode.id = tmp.id;
-	tempCode.code = fs.readFileSync('./public/codePool/'+tmp.id+'/'+tmp.id+'.py','utf8');
+	tempCode.code = fs.readFileSync('./public/codePool2/'+tmp.id+'/'+tmp.id+'.py','utf8');
 	tempCode.position = '';	
 	var flag = 1;//flag for row 
 	for(var j =0; j<mydocs.children.length; j++){
@@ -260,8 +269,6 @@ async.series([
 	for(var j=flag; j<=result[i].numLines;j++){
 		tempCode.position += '.\n';	
 	}	
-	console.log(tempCode.id);
-	console.log(mydocs.children);
 
 	StudentCode.push(tempCode);
 	///////////////////////////////////////////////////////////////////////////////////////////////
@@ -324,7 +331,6 @@ async.series([
 	  if(result[i]._id == recommendID['module']){
 		tmp.moduleURL = result[i].url;
 	  }
-	//console.log(tmp);
 	RecommendCode.push(tmp);	
 	 for(var j = 0; j < numUrl; j++){
  	    if(_.map(StudentList)[i].id == result[j]._id){
@@ -358,6 +364,10 @@ async.series([
 
 function(err){
     if(err) console.log(err);
+    StudentList.sort(function(a,b){
+	return a.cnt > b.cnt ? -1 : a.cnt < b.cnt ? 1 : 0 ;
+    });
+	console.log('here');
     res.render('home',{
 	IndenCount:indenCnt, 
 	NamingCount:namingCnt, 

@@ -31,7 +31,7 @@
 	content:""!important
   }
   .container{
-	width:1400px;
+	width:1500px;
   }
   </style>
   <script type="text/javascript">
@@ -53,7 +53,7 @@
 	{
 	 $("#"+row).toggle();
 	}
-
+	
   </script>
 </head>
 <body>
@@ -70,7 +70,7 @@
   <ul class="nav nav-tabs">
     <li class="active"><a data-toggle="tab" href="#home">Issues</a></li>
     <li><a data-toggle="tab" href="#code">Code</a></li>
-    <li><a data-toggle="tab" href="#graph">Grpah</a></li>
+    <li><a data-toggle="tab" href="#graph">Graph</a></li>
     <p class="text-right"><script language="JavaScript"> 
 		var today = new Date( ) 
 		document.write(today.getFullYear( ) , "." , 
@@ -106,13 +106,13 @@
 	      </tbody>
              </table>
             </div>
-	    <form id="copyCheck" method="post" action="/CopyCheck">
+	    <form id="copyCheck" method="post" action="/CopyCheck" value="<script>location.href;</script>">
     <h4>CopyCheck    <input type="image" name="color" src="./images/animat-search-color.gif" height="30" width="30"><p style="display : inline;font-size:0.6em">< refresh </p></h4>
     </form>
     <div class="well">
       <p><a href="<%= mossUrl %>" target="_blank"><%= mossUrl %></a></p>
     </div>
-    <h4>Recommend Code</h4>
+    <h4>Recommended Code</h4>
     <div class="well">
 		<p><a href="<%= RecommendCode[0].indentationURL %>" target="_blank">Indentation		: <%= RecommendCode[0].indentationURL %></a></p>
                 <p><a href="<%= RecommendCode[0].namingURL %>" target="_blank">Naming		: <%= RecommendCode[0].indentationURL %></a></p>
@@ -166,34 +166,28 @@
 	      </tr>
 	      <tr id="hidden_row<%= i %>" class="hidden_row" style="display: none;">
 		<td colspan=5>
-		 <pre class="col-md-6" style="display:inline">
-		  <pre class="brush: python" style="overflow-x:scroll"><%=StudentList[i-1].code %></pre>
-		 </pre>
-		 <pre class="col-md-6">
-		  <pre class="brush: python"><%=StudentList[i-1].position %></pre>
-		 </pre>
- 		 <div class="container show-grid">
-		    <div class="row">
-		      <pre class="col-md-4" style="height:200px;line-height:0.3em">
-			<h3>Static Information</h3>
-			<p>Block 깊이 		: <%= StudentList[i-1].blockDepth %></p>
+		 <div class="container show-grid">
+                    <div class="row">
+                      <pre class="col-md-4" style="height:200px;line-height:0.3em">
+                        <h3>Static Information</h3>
+                        <p>Block 깊이		: <%= StudentList[i-1].blockDepth %></p>
                         <p>최대 Block 깊이	: <%= StudentList[i-1].maxBlockDepth %></p>
-                        <p>Block 개수 		: <%= StudentList[i-1].numBlocks %></p>
-                        <p>글자수 			: <%= StudentList[i-1].numCharacters %></p>
-                        <p>Class 개수 		: <%= StudentList[i-1].numClasses %></p>
-                        <p>주석 개수 			: <%= StudentList[i-1].numComments %></p>
-                        <p>Inline 주석 개수 	: <%= StudentList[i-1].numCommentsInline %></p>
-                        <p>함수 개수 			: <%= StudentList[i-1].numFunctions %></p>
-                        <p>Keyword 개수 	: <%= StudentList[i-1].numKeywords %></p>
-                        <p>Line 개수 		: <%= StudentList[i-1].numLines %></p>
-                        <p>Docstring 개수 	: <%= StudentList[i-1].numModuleDocStrings %></p>
-                        <p>SrcLines 수 		: <%= StudentList[i-1].numSrcLines %></p>
-                        <p>Token 개수 		: <%= StudentList[i-1].numTokens %></p>
-		       </pre>
+                        <p>Block 개수		: <%= StudentList[i-1].numBlocks %></p>
+                        <p>글자수                       : <%= StudentList[i-1].numCharacters %></p>
+                        <p>Class 개수		: <%= StudentList[i-1].numClasses %></p>
+                        <p>주석 개수			: <%= StudentList[i-1].numComments %></p>
+                        <p>Inline 주석 개수	: <%= StudentList[i-1].numCommentsInline %></p>
+                        <p>함수 개수			: <%= StudentList[i-1].numFunctions %></p>
+                        <p>Keyword 개수		: <%= StudentList[i-1].numKeywords %></p>
+                        <p>Line 개수			: <%= StudentList[i-1].numLines %></p>
+                        <p>Docstring 개수	: <%= StudentList[i-1].numModuleDocStrings %></p>
+                        <p>SrcLines 수		: <%= StudentList[i-1].numSrcLines %></p>
+                        <p>Token 개수		: <%= StudentList[i-1].numTokens %></p>
+                       </pre>
                        <pre class="col-md-4" style="height:200px;line-height:0.3em">
-			<h3>Issues Count </h3>
-			<p>Indentation		: <%= StudentList[i-1].IndentationCount %></p>
-			<p>Naming			: <%= StudentList[i-1].NamingCount %> </p>
+                        <h3>Issues Count </h3>
+                        <p>Indentation		: <%= StudentList[i-1].IndentationCount %></p>
+                        <p>Naming			: <%= StudentList[i-1].NamingCount %> </p>
                         <p>Comment		: <%= StudentList[i-1].CommentCount %></p>
                         <p>WhiteSpace		: <%= StudentList[i-1].WhiteSpaceCount %></p>
                         <p>CodeFormat		: <%= StudentList[i-1].CodeFormatCount %></p>
@@ -201,15 +195,21 @@
                         <p>Function			: <%= StudentList[i-1].FunctionCount %></p>
                         <p>Class			: <%= StudentList[i-1].ClassCount %></p>
                         <p>Module			: <%= StudentList[i-1].ModuleCount %></p>
-		       </pre>
-                       <pre class="col-md-4" style="height:200px;line-height:0.3em">
-			<h3>Complexity </h3>
-			<h2><%= StudentList[i-1].__main__ %></h2>
-			<h4>평균 복잡도 : <%= averageComplexity %></h4>
-		       </pre>
-		     </div>
-		 </div>
-		</td>
+                       </pre>
+                      <pre class="col-md-4" style="height:200px;line-height:0.3em">
+                        <h3>Complexity </h3>
+                        <h2><%= StudentList[i-1].__main__ %></h2>
+                        <h4>평균 복잡도 : <%= averageComplexity %></h4>
+                       </pre>
+                     </div>
+                 </div>
+		 <pre class="col-md-6" style="display:inline">
+		  <pre class="brush: python" style="overflow-x:scroll"><%=StudentList[i-1].code %></pre>
+		 </pre>
+		 <pre class="col-md-6">
+		  <pre class="brush: python"><%=StudentList[i-1].position %></pre>
+		 </pre>
+ 		</td>
               </tr>
 	      <% } %>
             </tbody>
@@ -271,7 +271,7 @@ var trace2 = {
 var data2 = [trace2];
 layout2 = {
  autosize: true,
- title: '학생들 날짜별 총 Issue수 '
+ title: '학생들 날짜별 평균 Issue수 '
 };
 Plotly.newPlot('IssueSumGraph', {
   data: data2,
